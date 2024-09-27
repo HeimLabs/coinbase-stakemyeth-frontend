@@ -10,6 +10,7 @@ export default function RootLayout() {
             <NavBar />
             {/* PAGE */}
             <main className={styles.outlet}>
+                {/* @todo - Shared/Dedicated Tabs */}
                 <Outlet />
             </main>
             {/* FOOTER */}
