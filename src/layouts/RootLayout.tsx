@@ -2,6 +2,7 @@
 import { Outlet } from 'react-router-dom';
 import styles from "../styles/Layout.module.scss";
 import NavBar from '../components/NavBar';
+import { coinbaseBadge } from '../assets';
 
 export default function RootLayout() {
     return (
@@ -15,7 +16,9 @@ export default function RootLayout() {
             </main>
             {/* FOOTER */}
             <div className={styles.footer}>
-                FOOTER
+                <a href="https://docs.cdp.coinbase.com/staking/docs/welcome" target="_blank" rel="noopener noreferrer">
+                    <img src={coinbaseBadge} alt="Coinbase" />
+                </a>
             </div>
         </div>
     )

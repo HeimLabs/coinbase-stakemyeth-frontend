@@ -5,10 +5,19 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    padding: 0px 40px;
 
     .outlet {
         display: flex;
         flex: 1;
         width: 100%;
+    }
+
+    .footer {
+        img {
+            height: 30px;
+            width: auto;
+        }
+        padding: 20px 0px;
     }
 }
