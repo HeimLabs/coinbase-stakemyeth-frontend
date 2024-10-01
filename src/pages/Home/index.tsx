@@ -38,6 +38,7 @@ export default function Home() {
             if (selectedTab == "unstake") setBalance(balances.unstakeableBalance);
             if (selectedTab == "claim") setBalance(balances.claimableBalance);
         }
+        setAmount(undefined);
     }, [balances, selectedTab]);
 
     // Common Loader
@@ -47,6 +48,12 @@ export default function Home() {
 
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAmount(Number(e.target.value) || undefined);
+    }
+
+    const handleMax = () => {
+        if (selectedTab == "stake") setAmount(balances?.stakeableBalance || 0);
+        else if (selectedTab == "unstake") setAmount(balances?.unstakeableBalance || 0);
+        else if (selectedTab == "claim") setAmount(balances?.claimableBalance || 0);
     }
 
     const handleAction = async () => {
@@ -101,10 +108,13 @@ export default function Home() {
                             <input
                                 type="number"
                                 step={0.00001}
-                                placeholder={`Enter ${selectedTab} amount`}
+                                placeholder={`Enter amount`}
                                 onChange={handleAmountChange}
-                                value={amount}
+                                value={amount === undefined ? '' : amount}
                             />
+                            <div onClick={handleMax} className={styles.maxButton}>
+                                MAX
+                            </div>
                         </div>
                     </div>
                     {/* CONNECT WALLET */}
