@@ -2,10 +2,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./NavBar.module.scss";
 import { useEffect, useState } from "react";
 import { logo } from "../../assets";
+import { useAccount } from "wagmi";
 
 export default function NavBar() {
     const navigate = useNavigate();
     const { pathname } = useLocation();
+    const { isConnected } = useAccount();
     const [activeTab, setActiveTab] = useState('wallet');
 
     useEffect(() => {
@@ -29,14 +31,14 @@ export default function NavBar() {
                         <span>Home</span>
                     </div>
                     {/* REWARDS */}
-                    <div onClick={() => handleTabChange("")} className={`${styles.tab} ${activeTab == "rewards" ? styles.active : ""}`}>
+                    <div onClick={() => handleTabChange("rewards")} className={`${styles.tab} ${activeTab == "rewards" ? styles.active : ""}`}>
                         <span>Rewards</span>
                     </div>
                 </div>
             </div>
             <div className={styles.rightContianer}>
-                <button>Network</button>
-                <button>Connect Wallet</button>
+                <w3m-network-button />
+                {isConnected ? <w3m-account-button /> : <w3m-connect-button />}
             </div>
         </div>
     );
