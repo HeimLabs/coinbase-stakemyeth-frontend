@@ -8,8 +8,9 @@
 
     .container {
         display: flex;
-        align-items: start;
-        justify-content: center;
+        align-items: center;
+        justify-content: start;
+        flex-direction: column;
         background-color: white;
         width: 100%;
         max-width: 500px;
@@ -47,6 +48,123 @@
                 &:not(.active):hover {
                     opacity: 0.7;
                     transition-duration: 0.3s;
+                }
+            }
+        }
+
+        .contentContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 30px;
+            width: 100%;
+            gap: 20px;
+
+            .availableContainer {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 30px 20px;
+                background-color: rgba(255, 255, 255, 0.5);
+                width: 100%;
+                border-radius: 10px;
+
+                .key {
+                    font-weight: 300;
+                }
+
+                .value {
+                    font-weight: 500;
+                }
+            }
+
+            .inputSection {
+                display: flex;
+                align-items: start;
+                justify-content: center;
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+
+                .title {
+                    margin-left: 10px;
+                }
+
+                .inputContainer {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    background-color: rgba(255, 255, 255, 0.5);
+                    padding: 20px;
+                    width: 100%;
+                    border-radius: 10px;
+
+                    img {
+                        height: 30px;
+                        width: auto;
+                    }
+
+                    input {
+                        width: 100%;
+                        font-size: x-large;
+                        border: none;
+                        outline: none;
+                        background: none;
+                        margin-left: 10px;
+                    }
+                }
+            }
+
+            .title {
+                font-weight: 200;
+                text-transform: capitalize;
+                text-wrap: nowrap;
+            }
+
+            .subtitle {
+                font-size: small;
+                font-weight: 200;
+            }
+
+            .connectWallet {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: larger;
+                color: white;
+                background-color: $purple-01;
+                border-radius: 10px;
+                width: 100%;
+                padding: 15px 0px;
+                cursor: pointer;
+                transition-duration: 0.3s;
+
+                &:hover {
+                    opacity: 0.7;
+                    transition-duration: 0.3s;
+                }
+            }
+
+            .infoContainer {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                width: 100%;
+                gap: 15px;
+
+                .row {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 100%;
+                }
+
+                .hr {
+                    height: 1px;
+                    width: 100%;
+                    background-color: rgba(128, 128, 128, 0.2);
                 }
             }
         }
