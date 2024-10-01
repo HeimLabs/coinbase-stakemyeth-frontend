@@ -18,6 +18,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 import { WagmiProvider } from 'wagmi'
 import { wagmiAdapter } from './config/reown.config.ts'
+import { GlobalProvider } from './contexts/global.context.tsx'
 
 const queryClient = new QueryClient()
 
@@ -35,10 +36,12 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <WagmiProvider config={wagmiAdapter.wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <SkeletonTheme>
-          <RouterProvider router={router} />
-          <ToastContainer />
-        </SkeletonTheme>
+        <GlobalProvider>
+          <SkeletonTheme>
+            <RouterProvider router={router} />
+            <ToastContainer />
+          </SkeletonTheme>
+        </GlobalProvider>
       </QueryClientProvider>
     </WagmiProvider>
   </StrictMode>,
