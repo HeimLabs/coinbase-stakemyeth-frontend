@@ -1,19 +1,19 @@
 @import "../../styles/variables";
 @import "../../styles/animations";
 
-
 .main {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
+    flex-direction: column;
+    gap: 20px;
 
     .container {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        background-color: white;
         width: 100%;
         max-width: 500px;
         min-height: 500px;

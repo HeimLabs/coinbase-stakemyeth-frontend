@@ -2,6 +2,7 @@ import { useState } from "react";
 import Chart from "../../components/Rewards/Chart";
 import { useGetRewards } from "../../hooks/useGetRewards";
 import styles from "./Rewards.module.scss";
+import Validators from "../../components/Rewards/Validators";
 
 export default function Rewards() {
     const [days, setDays] = useState(7);
@@ -27,6 +28,7 @@ export default function Rewards() {
                 </div>
                 <Chart rewards={stakingRewards || []} />
             </div>
+            <Validators />
         </div>
     );
 }
