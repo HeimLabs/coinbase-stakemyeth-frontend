@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import styles from "../styles/Layout.module.scss";
 import NavBar from '../components/NavBar';
 import { coinbaseBadge } from '../assets';
-import Tabs from '../components/Tabs';
+import Modes from '../components/Modes';
 
 export default function RootLayout() {
     return (
@@ -12,7 +12,7 @@ export default function RootLayout() {
             <NavBar />
             {/* PAGE */}
             <main className={styles.outlet}>
-                <Tabs />
+                <Modes />
                 <Outlet />
             </main>
             {/* FOOTER */}

@@ -1,21 +1,21 @@
 import { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
 
 type GlobalContextType = {
-    selectedTab: string
-    setTab: Dispatch<SetStateAction<string>> | (() => void)
+    selectedMode: string
+    setMode: Dispatch<SetStateAction<string>> | (() => void)
 }
 
 const GlobalContext = createContext<GlobalContextType>({
-    selectedTab: "shared",
-    setTab: (() => {})
+    selectedMode: "shared",
+    setMode: (() => {})
 });
 
 export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
-    const [selectedTab, setTab] = useState("shared");
+    const [selectedMode, setMode] = useState("shared");
 
     return <GlobalContext.Provider value={{
-        selectedTab,
-        setTab
+        selectedMode,
+        setMode
     }}>
         {children}
     </GlobalContext.Provider>;
