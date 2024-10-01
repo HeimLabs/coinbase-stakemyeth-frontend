@@ -1,5 +1,5 @@
 export type GetBalancesRequest = {
-    address: string,
+    address: string | `0x${string}`,
     chainId: number,
     mode: 'shared' | 'dedicated'
 }
@@ -10,23 +10,22 @@ export type GetBalancesResponse = {
 }
 
 export type GetRewardsRequest = {
-    addresses: string[],
+    address: string | `0x${string}`,
     chainId: number,
     mode: 'shared' | 'dedicated',
     days: number
 }
 export type StakingReward = {
-    date: Date,
-    address: string,
+    date: string,
+    address: string | `0x${string}`,
     amount: number,
-    usdValue: number
+    // usdValue: number | any
 }
 export type GetRewardsResponse = {
     stakingRewards: StakingReward[]
 }
 
 export type GetValidatorsRequest = {
-    address: string,
     chainId: number,
 }
 export type Validator = {
@@ -38,7 +37,7 @@ export type GetValidatorsResponse = {
 }
 
 export type BuildTransactionRequest = {
-    address: string,
+    address: string | `0x${string}`,
     chainId: number,
     mode: 'shared' | 'dedicated',
     amount: number

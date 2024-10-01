@@ -20,6 +20,7 @@
     "react-loading-skeleton": "^3.5.0",
     "react-router-dom": "^6.26.2",
     "react-toastify": "^10.0.5",
+    "recharts": "^2.12.7",
     "viem": "^2.21.15",
     "wagmi": "^2.12.16"
   },
