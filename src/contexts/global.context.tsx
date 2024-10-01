@@ -1,17 +1,17 @@
 import { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
 
 type GlobalContextType = {
-    selectedMode: string
-    setMode: Dispatch<SetStateAction<string>> | (() => void)
+    selectedMode: "shared" | "dedicated"
+    setMode: Dispatch<SetStateAction<"shared" | "dedicated">> | (() => void)
 }
 
 const GlobalContext = createContext<GlobalContextType>({
     selectedMode: "shared",
-    setMode: (() => {})
+    setMode: (() => { })
 });
 
 export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
-    const [selectedMode, setMode] = useState("shared");
+    const [selectedMode, setMode] = useState<"shared" | "dedicated">("shared");
 
     return <GlobalContext.Provider value={{
         selectedMode,

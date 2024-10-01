@@ -4,16 +4,60 @@ import { useGlobal } from "../../contexts/global.context";
 import { useAccount } from "wagmi";
 import { ethereumLogo } from "../../assets";
 import { useAppKit } from "@reown/appkit/react";
+import { useGetBalances } from "../../hooks/useGetBalances";
+import { useStake } from "../../hooks/useStake";
+import { useUnstake } from "../../hooks/useUnstake";
+import { useClaim } from "../../hooks/useClaim";
+
+// @todo - Handle unsupported network
 
 export default function Home() {
     const { selectedMode } = useGlobal();
     const { isConnected } = useAccount();
     const { open } = useAppKit();
-    const [selectedTab, setSelectedTab] = useState("stake");
 
+    const [selectedTab, setSelectedTab] = useState("stake");
+    const [balance, setBalance] = useState(0);
+    const [amount, setAmount] = useState<number>();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const { data: balances } = useGetBalances();
+    const { initiateStaking, isLoading: isStaking } = useStake(amount || 0);
+    const { initiateUnstaking, isLoading: isUnstaking } = useUnstake(amount || 0);
+    const { initiateClaiming, isLoading: isClaiming } = useClaim(amount || 0);
+
+    // Reset Tabs
     useEffect(() => {
         setSelectedTab("stake");
     }, [selectedMode]);
+
+    // Handle Available Balance
+    useEffect(() => {
+        if (balances) {
+            if (selectedTab == "stake") setBalance(balances.stakeableBalance);
+            if (selectedTab == "unstake") setBalance(balances.unstakeableBalance);
+            if (selectedTab == "claim") setBalance(balances.claimableBalance);
+        }
+    }, [balances, selectedTab]);
+
+    // Common Loader
+    useEffect(() => {
+        setIsLoading(isStaking || isUnstaking || isClaiming);
+    }, [isStaking, isUnstaking, isClaiming])
+
+    const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAmount(Number(e.target.value) || undefined);
+    }
+
+    const handleAction = async () => {
+        try {
+            if (selectedTab == "stake") initiateStaking();
+            else if (selectedTab == "unstake") initiateUnstaking();
+            else if (selectedTab == "claim") initiateClaiming();
+        } catch (err) {
+            console.error("Failed to perform action: ", err);
+        }
+    }
 
     return (
         <div className={styles.main}>
@@ -43,10 +87,10 @@ export default function Home() {
                 <div className={styles.contentContainer}>
                     {/* AVAILABLE BALANCES */}
                     {isConnected &&
-                    <div className={styles.availableContainer}>
-                        <span className={styles.key}>Available to {selectedTab}</span>
-                        <span className={styles.value}>0.1234 ETH</span>
-                    </div>
+                        <div className={styles.availableContainer}>
+                            <span className={styles.key}>Available to {selectedTab}</span>
+                            <span className={styles.value}>{Number(balance).toLocaleString(undefined, { maximumFractionDigits: 4 })} ETH</span>
+                        </div>
                     }
                     {/* INPUT CONTAINER */}
                     <div className={styles.inputSection}>
@@ -54,14 +98,22 @@ export default function Home() {
                         <div className={styles.inputContainer}>
                             <img src={ethereumLogo} alt="Ethereum" />
                             <span className={styles.title}>ETH amount</span>
-                            <input type="number" step={0.00001} />
+                            <input
+                                type="number"
+                                step={0.00001}
+                                placeholder={`Enter ${selectedTab} amount`}
+                                onChange={handleAmountChange}
+                                value={amount}
+                            />
                         </div>
                     </div>
+                    {/* CONNECT WALLET */}
                     {!isConnected &&
-                    <div className={styles.connectWallet} onClick={() => open()}>
-                        Connect Wallet
-                    </div>
+                        <div className={`${styles.primaryButton} ${styles.connectWallet}`} onClick={() => open()}>
+                            Connect Wallet
+                        </div>
                     }
+                    {/* INFORMATION */}
                     <div className={styles.infoContainer}>
                         <div className={styles.row}>
                             <span className={styles.title}>Staking Type</span>
@@ -78,6 +130,15 @@ export default function Home() {
                             <span className={styles.subtitle}>0.00 ETH/$0.00</span>
                         </div>
                     </div>
+                    {/* ACTION */}
+                    {isConnected &&
+                        <div
+                            onClick={handleAction}
+                            className={`${styles.primaryButton} ${styles.action} ${isLoading ? styles.loading : ""}`}
+                        >
+                            {selectedTab}
+                        </div>
+                    }
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
 @import "../../styles/variables";
+@import "../../styles/animations";
 
 .main {
     display: flex;
@@ -112,6 +113,13 @@
                         outline: none;
                         background: none;
                         margin-left: 10px;
+                        text-align: center;
+
+                        &::placeholder {
+                            opacity: 0.3;
+                            font-size: large;
+                            font-weight: 200;
+                        }
                     }
                 }
             }
@@ -128,22 +136,7 @@
             }
 
             .connectWallet {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: larger;
-                color: white;
                 background-color: $purple-01;
-                border-radius: 10px;
-                width: 100%;
-                padding: 15px 0px;
-                cursor: pointer;
-                transition-duration: 0.3s;
-
-                &:hover {
-                    opacity: 0.7;
-                    transition-duration: 0.3s;
-                }
             }
 
             .infoContainer {
@@ -166,6 +159,36 @@
                     width: 100%;
                     background-color: rgba(128, 128, 128, 0.2);
                 }
+            }
+
+            .primaryButton {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: larger;
+                color: white;
+                border-radius: 10px;
+                width: 100%;
+                padding: 15px 0px;
+                cursor: pointer;
+                transition-duration: 0.3s;
+
+                &:hover {
+                    opacity: 0.7;
+                    transition-duration: 0.3s;
+                }
+
+                &.loading {
+                    background: linear-gradient(90deg, rgba(142, 142, 142, 0.2) 25%, rgba(142, 142, 142, 0.5) 50%, rgba(142, 142, 142, 0.2) 75%);
+                    background-size: 200% 100%;
+                    animation: shimmer 1.5s infinite;
+                    pointer-events: none;
+                }
+            }
+
+            .action {
+                background-color: black;
+                text-transform: capitalize;
             }
         }
     }

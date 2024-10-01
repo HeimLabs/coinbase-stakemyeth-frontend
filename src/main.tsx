@@ -39,7 +39,7 @@ createRoot(document.getElementById('root')!).render(
         <GlobalProvider>
           <SkeletonTheme>
             <RouterProvider router={router} />
-            <ToastContainer />
+            <ToastContainer stacked={true} />
           </SkeletonTheme>
         </GlobalProvider>
       </QueryClientProvider>

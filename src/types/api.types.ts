@@ -44,18 +44,16 @@ export type BuildTransactionRequest = {
     amount: number
 }
 export type Transaction = {
-    rawTransaction: {
-        type: string,
-        to: string,
-        data: string,
+        type: "legacy" | "eip2930" | "eip1559" | "eip4844" | "eip7702" | undefined,
+        to: `0x${string}`,
+        data: `0x${string}`,
         nonce: number,
         gasLimit: bigint,
         gasPrice: bigint,
         maxPriorityFeePerGas: bigint,
         maxFeePerGas: bigint,
         value: bigint,
-        chainId: bigint,
-    },
+        chainId: number,
 }
 export type BuildTransactionResponse = {
     transactions: Transaction[]
