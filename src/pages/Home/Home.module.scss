@@ -90,6 +90,7 @@
 
                 .title {
                     margin-left: 10px;
+                    margin-right: 10px;
                 }
 
                 .inputContainer {
@@ -112,7 +113,6 @@
                         border: none;
                         outline: none;
                         background: none;
-                        margin-left: 10px;
                         text-align: center;
 
                         &::placeholder {

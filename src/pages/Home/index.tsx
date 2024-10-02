@@ -105,16 +105,29 @@ export default function Home() {
                         <div className={styles.inputContainer}>
                             <img src={ethereumLogo} alt="Ethereum" />
                             <span className={styles.title}>ETH amount</span>
+                            {selectedMode == "dedicated" &&
+                                <div onClick={() => setAmount(amount ? amount - 32 : 0)} className={styles.maxButton}>
+                                    -
+                                </div>
+                            }
                             <input
                                 type="number"
                                 step={0.00001}
                                 placeholder={`Enter amount`}
                                 onChange={handleAmountChange}
                                 value={amount === undefined ? '' : amount}
+                                disabled={selectedMode == "dedicated"}
                             />
-                            <div onClick={handleMax} className={styles.maxButton}>
-                                MAX
-                            </div>
+                            {selectedMode == "dedicated" &&
+                                <div onClick={() => setAmount(amount ? amount + 32 : 32)} className={styles.maxButton}>
+                                    +
+                                </div>
+                            }
+                            {selectedMode == "shared" &&
+                                <div onClick={handleMax} className={styles.maxButton}>
+                                    MAX
+                                </div>
+                            }
                         </div>
                     </div>
                     {/* CONNECT WALLET */}
