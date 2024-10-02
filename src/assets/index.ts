@@ -3,3 +3,7 @@ export { default as background } from "./background.png";
 export { default as coinbaseBadge } from "./coinbaseBadge.png";
 export { default as ethereumLogo } from "./ethereumLogo.png";
 export { default as etherscanLogo } from "./etherscanLogo.png";
+export { default as hourglassIcon } from "./hourglassIcon.png";
+export { default as mobileIcon } from "./mobileIcon.png";
+export { default as checkIcon } from "./checkIcon.png";
+export { default as crossIcon } from "./crossIcon.png";

@@ -206,5 +206,55 @@
                 text-transform: capitalize;
             }
         }
+
+        &.status {
+            justify-content: center;
+            gap: 10px;
+
+            img {
+                max-height: 100px;
+                width: auto;
+            }
+
+            .title {
+                font-size: large;
+                max-width: 250px;
+                text-align: center;
+                font-weight: 300;
+            }
+
+            .subtitle {
+                font-size: small;
+                max-width: 400px;
+                text-align: center;
+                font-weight: 200;
+                margin-top: 40px;
+            }
+
+            .action {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                padding: 10px 20px;
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.05);
+                cursor: pointer;
+                font-size: small;
+                transition-duration: 0.3s;
+
+                img {
+                    height: 20px;
+                    width: auto;
+                }
+
+                &:hover {
+                    opacity: 0.7;
+                    transition-duration: 0.3s;
+                }
+            }
+        }
     }
+
 }
