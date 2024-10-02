@@ -28,7 +28,7 @@ export default function Home() {
 
     const { data: balances } = useGetBalances();
     const { initiateStaking, isStakeBuilding, isStakeWaiting, isStakeSubmitting, isStakeSuccess, isStakeError, stakeTxnHash, resetStake } = useStake(amount || 0);
-    const { initiateUnstaking, isLoading: isUnstaking } = useUnstake(amount || 0);
+    const { initiateUnstaking, isUnstakeBuilding, isUnstakeWaiting, isUnstakeSubmitting, isUnstakeSuccess, isUnstakeError, unstakeTxnHash, resetUnstake } = useUnstake(amount || 0);
     const { initiateClaiming, isLoading: isClaiming } = useClaim(amount || 0);
 
     // Reset Tabs
@@ -48,13 +48,16 @@ export default function Home() {
 
     // Common State Handler
     useEffect(() => {
-        setIsBuilding(isStakeBuilding);
-        setIsWaiting(isStakeWaiting);
-        setIsSubmitting(isStakeSubmitting);
-        setIsSuccess(isStakeSuccess);
-        setIsFailed(isStakeError);
-        setTxHash([stakeTxnHash].find(v => v !== undefined));
-    }, [isStakeBuilding, isStakeWaiting, isStakeSubmitting, isStakeSuccess, isStakeError])
+        setIsBuilding(isStakeBuilding || isUnstakeBuilding);
+        setIsWaiting(isStakeWaiting || isUnstakeWaiting);
+        setIsSubmitting(isStakeSubmitting || isUnstakeSubmitting);
+        setIsSuccess(isStakeSuccess || isUnstakeSuccess);
+        setIsFailed(isStakeError || isUnstakeError);
+        setTxHash([stakeTxnHash, unstakeTxnHash].find(v => v !== undefined));
+    }, [
+        isStakeBuilding, isStakeWaiting, isStakeSubmitting, isStakeSuccess, isStakeError, stakeTxnHash,
+        isUnstakeBuilding, isUnstakeWaiting, isUnstakeSubmitting, isUnstakeSuccess, isUnstakeError, unstakeTxnHash
+    ])
 
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAmount(Number(e.target.value) || undefined);
@@ -105,6 +108,7 @@ export default function Home() {
 
     const reset = () => {
         resetStake();
+        resetUnstake();
     }
 
     // TRANSACTION STATE
