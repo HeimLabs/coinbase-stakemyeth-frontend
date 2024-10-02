@@ -29,7 +29,7 @@ export default function Home() {
     const { data: balances } = useGetBalances();
     const { initiateStaking, isStakeBuilding, isStakeWaiting, isStakeSubmitting, isStakeSuccess, isStakeError, stakeTxnHash, resetStake } = useStake(amount || 0);
     const { initiateUnstaking, isUnstakeBuilding, isUnstakeWaiting, isUnstakeSubmitting, isUnstakeSuccess, isUnstakeError, unstakeTxnHash, resetUnstake } = useUnstake(amount || 0);
-    const { initiateClaiming, isLoading: isClaiming } = useClaim(amount || 0);
+    const { initiateClaiming, isClaimBuilding, isClaimWaiting, isClaimSubmitting, isClaimSuccess, isClaimError, claimTxnHash, resetClaim } = useClaim(amount || 0);
 
     // Reset Tabs
     useEffect(() => {
@@ -48,15 +48,16 @@ export default function Home() {
 
     // Common State Handler
     useEffect(() => {
-        setIsBuilding(isStakeBuilding || isUnstakeBuilding);
-        setIsWaiting(isStakeWaiting || isUnstakeWaiting);
-        setIsSubmitting(isStakeSubmitting || isUnstakeSubmitting);
-        setIsSuccess(isStakeSuccess || isUnstakeSuccess);
-        setIsFailed(isStakeError || isUnstakeError);
-        setTxHash([stakeTxnHash, unstakeTxnHash].find(v => v !== undefined));
+        setIsBuilding(isStakeBuilding || isUnstakeBuilding || isClaimBuilding);
+        setIsWaiting(isStakeWaiting || isUnstakeWaiting || isClaimWaiting);
+        setIsSubmitting(isStakeSubmitting || isUnstakeSubmitting || isClaimSubmitting);
+        setIsSuccess(isStakeSuccess || isUnstakeSuccess || isClaimSuccess);
+        setIsFailed(isStakeError || isUnstakeError || isClaimError);
+        setTxHash([stakeTxnHash, unstakeTxnHash, claimTxnHash].find(v => v !== undefined));
     }, [
         isStakeBuilding, isStakeWaiting, isStakeSubmitting, isStakeSuccess, isStakeError, stakeTxnHash,
-        isUnstakeBuilding, isUnstakeWaiting, isUnstakeSubmitting, isUnstakeSuccess, isUnstakeError, unstakeTxnHash
+        isUnstakeBuilding, isUnstakeWaiting, isUnstakeSubmitting, isUnstakeSuccess, isUnstakeError, unstakeTxnHash,
+        isClaimBuilding, isClaimWaiting, isClaimSubmitting, isClaimSuccess, isClaimError, claimTxnHash
     ])
 
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,6 +110,7 @@ export default function Home() {
     const reset = () => {
         resetStake();
         resetUnstake();
+        resetClaim();
     }
 
     // TRANSACTION STATE
