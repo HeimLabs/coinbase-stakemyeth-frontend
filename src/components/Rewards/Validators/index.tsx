@@ -27,7 +27,7 @@ export default function Validators() {
                             </div>
                             <div className={styles.vr} />
                             <div className={`${styles.statusCell}`}>
-                                {validator.status}
+                                {validator.status.replace("_", " ")}
                             </div>
                         </div>
                         <div className={styles.hr} />
