@@ -8,6 +8,7 @@ import { useGetBalances } from "../../hooks/useGetBalances";
 import { useStake } from "../../hooks/useStake";
 import { useUnstake } from "../../hooks/useUnstake";
 import { useClaim } from "../../hooks/useClaim";
+import Skeleton from "react-loading-skeleton";
 
 // @todo - Handle unsupported network
 
@@ -26,7 +27,7 @@ export default function Home() {
     const [isFailed, setIsFailed] = useState(false);
     const [txHash, setTxHash] = useState<`0x${string}`>();
 
-    const { data: balances } = useGetBalances();
+    const { data: balances, isFetching: isFetchingBalances } = useGetBalances();
     const { initiateStaking, isStakeBuilding, isStakeWaiting, isStakeSubmitting, isStakeSuccess, isStakeError, stakeTxnHash, resetStake } = useStake(amount || 0);
     const { initiateUnstaking, isUnstakeBuilding, isUnstakeWaiting, isUnstakeSubmitting, isUnstakeSuccess, isUnstakeError, unstakeTxnHash, resetUnstake } = useUnstake(amount || 0);
     const { initiateClaiming, isClaimBuilding, isClaimWaiting, isClaimSubmitting, isClaimSuccess, isClaimError, claimTxnHash, resetClaim } = useClaim(amount || 0);
@@ -61,7 +62,10 @@ export default function Home() {
     ])
 
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAmount(Number(e.target.value) || undefined);
+        // @review - auto max bad UX?
+        // @review - disable action instead?
+        if (Number(e.target.value) > balance) handleMax();
+        else setAmount(Number(e.target.value));
     }
 
     const handleMax = () => {
@@ -168,7 +172,11 @@ export default function Home() {
                         {isConnected &&
                             <div className={styles.availableContainer}>
                                 <span className={styles.key}>Available to {selectedTab}</span>
-                                <span className={styles.value}>{Number(balance).toLocaleString(undefined, { maximumFractionDigits: 4 })} ETH</span>
+                                {
+                                    isFetchingBalances
+                                        ? <Skeleton width={100} />
+                                        : <span className={styles.value}>{Number(balance).toLocaleString(undefined, { maximumFractionDigits: 4 })} ETH</span>
+                                }
                             </div>
                         }
                         {/* INPUT CONTAINER */}
@@ -227,12 +235,13 @@ export default function Home() {
                         </div>
                         {/* ACTION */}
                         {isConnected &&
-                            <div
+                            <button
                                 onClick={handleAction}
+                                disabled={isFetchingBalances || !amount}
                                 className={`${styles.primaryButton} ${styles.action}`}
                             >
                                 {selectedTab}
-                            </div>
+                            </button>
                         }
                     </div>
                 </div>

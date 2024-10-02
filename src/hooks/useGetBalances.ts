@@ -18,6 +18,7 @@ export const useGetBalances = () => {
         select: (data) => data.data,
         placeholderData: keepPreviousData,
         refetchOnWindowFocus: false,
+        refetchInterval: 60000, // 1 minute
         enabled: !!address && !!chainId && !!mode
     });
 }
