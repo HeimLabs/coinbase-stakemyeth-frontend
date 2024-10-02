@@ -30,7 +30,9 @@ export type GetValidatorsRequest = {
 }
 export type Validator = {
     id: string,
-    status: string,
+    status: "provisioning" | "provisioned" | "deposited" | "pending_activation"
+    | "active" | "exiting" | "exited" | "withdrawal_available"
+    | "withdrawal_complete" | "unknown" | "active_slashed" | "exited_slashed",
 }
 export type GetValidatorsResponse = {
     validators: Validator[]
@@ -43,16 +45,16 @@ export type BuildTransactionRequest = {
     amount: number
 }
 export type Transaction = {
-        type: "legacy" | "eip2930" | "eip1559" | "eip4844" | "eip7702" | undefined,
-        to: `0x${string}`,
-        data: `0x${string}`,
-        nonce: number,
-        gasLimit: bigint,
-        gasPrice: bigint,
-        maxPriorityFeePerGas: bigint,
-        maxFeePerGas: bigint,
-        value: bigint,
-        chainId: number,
+    type: "legacy" | "eip2930" | "eip1559" | "eip4844" | "eip7702" | undefined,
+    to: `0x${string}`,
+    data: `0x${string}`,
+    nonce: number,
+    gasLimit: bigint,
+    gasPrice: bigint,
+    maxPriorityFeePerGas: bigint,
+    maxFeePerGas: bigint,
+    value: bigint,
+    chainId: number,
 }
 export type BuildTransactionResponse = {
     transactions: Transaction[]

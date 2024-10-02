@@ -37,7 +37,7 @@
         img {
             height: 15px;
             width: auto;
-            margin-left: 10px;
+            // margin-left: 10px;
         }
     }
 
@@ -46,9 +46,15 @@
         align-items: center;
         justify-content: center;
         width: 140px;
-        padding: 0px 20px;
+        padding: 0px 10px;
         text-transform: capitalize;
         text-align: center;
+        gap: 5px;
+
+        img {
+            height: 12px;
+            width: auto;
+        }
     }
 
     .header {
