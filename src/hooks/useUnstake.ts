@@ -22,7 +22,7 @@ export const useUnstake = (amount: number) => {
             mode,
             amount
         }),
-        onSuccess: (data) => setTransaction(data.data.transactions[0]),
+        onSuccess: (data) => data.data && data.data.transactions ? setTransaction(data.data.transactions[0]) : null,
     });
 
     const sendTransactionMutation = useMutation({
@@ -42,7 +42,7 @@ export const useUnstake = (amount: number) => {
     });
 
     useEffect(() => {
-        if (buildMutation.isSuccess && transaction)
+        if (buildMutation.isSuccess && transaction && mode == "shared")
             sendTransactionMutation.mutate();
     }, [buildMutation.isSuccess, transaction]);
 
@@ -69,7 +69,7 @@ export const useUnstake = (amount: number) => {
         isUnstakeBuilding: buildMutation.isPending,
         isUnstakeWaiting: sendTransactionMutation.isPending,
         isUnstakeSubmitting: isTxnFetching,
-        isUnstakeSuccess: isTxnSuccess,
+        isUnstakeSuccess:  mode == "shared" ? isTxnSuccess : buildMutation.isSuccess,
         isUnstakeError: buildMutation.isError || sendTransactionMutation.isError,
         unstakeTxnHash,
         resetUnstake: reset
