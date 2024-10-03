@@ -13,11 +13,17 @@ export default function Modes() {
                 >
                     Shared ETH Staking
                 </div>
-                <div
-                    className={`${styles.tab} ${selectedMode == "dedicated" ? styles.active : ""}`}
-                    onClick={() => setMode("dedicated")}
-                >
-                    Dedicated ETH Staking
+                <div className={`${styles.wrapper} ${import.meta.env.VITE_DEDICATED_ENABLED != "true" ? styles.disabledWrapper : ""}`}>
+                    <div
+                        className={`
+                        ${styles.tab} 
+                        ${selectedMode == "dedicated" ? styles.active : ""}
+                        ${import.meta.env.VITE_DEDICATED_ENABLED != "true" ? styles.disabled : ""}
+                        `}
+                        onClick={() => setMode("dedicated")}
+                    >
+                        Dedicated ETH Staking
+                    </div>
                 </div>
             </div>
         </div>
