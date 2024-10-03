@@ -11,10 +11,14 @@ import Rewards from './pages/Rewards'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { SkeletonTheme } from 'react-loading-skeleton';
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+
+import { WagmiProvider } from 'wagmi'
+import { wagmiAdapter } from './config/reown.config.ts'
+import { GlobalProvider } from './contexts/global.context.tsx'
 
 const queryClient = new QueryClient()
 
@@ -30,11 +34,15 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <SkeletonTheme>
-        <RouterProvider router={router} />
-        <ToastContainer />
-      </SkeletonTheme>
-    </QueryClientProvider>
+    <WagmiProvider config={wagmiAdapter.wagmiConfig}>
+      <QueryClientProvider client={queryClient}>
+        <GlobalProvider>
+          <SkeletonTheme>
+            <RouterProvider router={router} />
+            <ToastContainer stacked={true} />
+          </SkeletonTheme>
+        </GlobalProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   </StrictMode>,
 )

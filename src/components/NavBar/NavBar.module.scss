@@ -1,9 +1,163 @@
+@import "../../styles/variables";
+
 .main {
     top: 0px;
     width: 100%;
     display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    padding: 20px 20px 10px 20px;
+    justify-content: space-between;
+    padding: 20px 0px 20px 0px;
     z-index: 2;
+
+    @media (max-width: 760px) {
+        display: none;
+    }
+
+    img {
+        height: 60px;
+        width: auto;
+    }
+
+    .leftContainer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+        width: 30%;
+
+        .tabContainer {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+
+            .tab {
+                cursor: pointer;
+
+                span {
+                    font-size: large;
+                    font-weight: 100;
+                }
+
+                &.active {
+                    color: $purple-01;
+                    cursor: default;
+                }
+
+                &:hover {
+                    span {
+                        font-weight: 200;
+                    }
+                }
+            }
+        }
+    }
+
+    .rightContianer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 20px;
+    }
+}
+
+.mobileMain {
+    top: 0px;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0px 20px 0px;
+    z-index: 2;
+    display: none;
+    position: relative;
+
+    @media (max-width: 760px) {
+        display: flex;
+    }
+
+    .header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        img {
+            height: 40px;
+            width: auto;
+            cursor: pointer;
+        }
+    }
+
+    .overlay {
+        left: 0px;
+        top: 0px;
+        position: fixed;
+        height: 100vh;
+        width: 100vw;
+        background-color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        visibility: hidden;
+        transition-duration: 0.2s;
+        opacity: 0;
+
+        &.open {
+            visibility: visible;
+            opacity: 1;
+            transition-duration: 0.2s;
+
+            .tabContainer {
+                width: 80%;
+                transition-duration: 0.3s;
+            }
+        }
+
+        .tabContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100%;
+            width: 0;
+            background-color: white;
+            gap: 20px;
+            transition-duration: 0.3s;
+
+            img {
+                height: 40px;
+                width: auto;
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                cursor: pointer;
+            }
+
+            .tab {
+                cursor: pointer;
+
+                span {
+                    font-size: large;
+                    font-weight: 100;
+                }
+
+                &.active {
+                    color: $purple-01;
+                    cursor: default;
+                }
+
+                &:hover {
+                    span {
+                        font-weight: 200;
+                    }
+                }
+            }
+        }
+    }
 }
