@@ -27,7 +27,7 @@
         display: flex;
         align-items: center;
         justify-content: start;
-        width: 100%;
+        // width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowwrap;
@@ -44,11 +44,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 140px;
         padding: 0px 10px;
         text-transform: capitalize;
         text-align: center;
         gap: 5px;
+        min-width: 105px;
 
         img {
             height: 12px;
@@ -62,6 +62,7 @@
 
         .validatorCell {
             padding: 0px 20px;
+            width: 100%;
         }
     }
 
