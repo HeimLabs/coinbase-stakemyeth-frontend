@@ -16,7 +16,7 @@ const holesky: CaipNetwork = {
 }
 
 // 3. Set the networks
-const networks = [mainnet, holesky]
+export const networks = [mainnet, holesky]
 
 // 4. Create Wagmi Adapter
 export const wagmiAdapter = new WagmiAdapter({

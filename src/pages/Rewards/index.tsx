@@ -4,11 +4,16 @@ import { useGetRewards } from "../../hooks/useGetRewards";
 import styles from "./Rewards.module.scss";
 import Validators from "../../components/Rewards/Validators";
 import { useGlobal } from "../../contexts/global.context";
+import { useCheckNetwork } from "../../hooks/useCheckNetwork";
+import { useAccount } from "wagmi";
 
 export default function Rewards() {
     const [days, setDays] = useState(7);
     const { data: stakingRewards, totalRewards } = useGetRewards(days);
     const { selectedMode } = useGlobal();
+    const { isWrongNetwork } = useCheckNetwork();
+    const { isConnected } = useAccount();
+
 
     const handleDaysChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setDays(Number(e.target.value))
@@ -28,6 +33,12 @@ export default function Rewards() {
                         <option value={30}>Last 30 days</option>
                     </select>
                 </div>
+                {(!isConnected) &&
+                    <span className={styles.error}>Wallet not connected!</span>
+                }
+                {(isConnected && isWrongNetwork) &&
+                    <span className={styles.error}>Wrong network, please switch to supported network!</span>
+                }
                 <Chart rewards={stakingRewards || []} />
             </div>
             {selectedMode == "dedicated" && <Validators />}

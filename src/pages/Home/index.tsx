@@ -9,6 +9,7 @@ import { useStake } from "../../hooks/useStake";
 import { useUnstake } from "../../hooks/useUnstake";
 import { useClaim } from "../../hooks/useClaim";
 import Skeleton from "react-loading-skeleton";
+import { useCheckNetwork } from "../../hooks/useCheckNetwork";
 
 // @todo - Handle unsupported network
 
@@ -16,6 +17,7 @@ export default function Home() {
     const { selectedMode } = useGlobal();
     const { isConnected, chain } = useAccount();
     const { open } = useAppKit();
+    const { isWrongNetwork, isPending: isSwitching, switchChain } = useCheckNetwork();
 
     const [selectedTab, setSelectedTab] = useState("stake");
     const [balance, setBalance] = useState(0);
@@ -168,6 +170,9 @@ export default function Home() {
                         }
                     </div>
                     <div className={styles.contentContainer}>
+                        {(isConnected && isWrongNetwork) &&
+                            <span className={styles.error}>Wrong network, please switch to supported network!</span>
+                        }
                         {/* AVAILABLE BALANCES */}
                         {isConnected &&
                             <div className={styles.availableContainer}>
@@ -211,10 +216,13 @@ export default function Home() {
                             </div>
                         </div>
                         {/* CONNECT WALLET */}
-                        {!isConnected &&
-                            <div className={`${styles.primaryButton} ${styles.connectWallet}`} onClick={() => open()}>
-                                Connect Wallet
-                            </div>
+                        {(!isConnected || isWrongNetwork) &&
+                            <button
+                                className={`${styles.primaryButton} ${styles.connectWallet}`}
+                                disabled={isSwitching}
+                                onClick={() => !isConnected ? open() : switchChain()}>
+                                {!isConnected ? "Connect Wallet" : "Switch Network"}
+                            </button>
                         }
                         {/* INFORMATION */}
                         <div className={styles.infoContainer}>
@@ -234,7 +242,7 @@ export default function Home() {
                             </div>
                         </div>
                         {/* ACTION */}
-                        {isConnected &&
+                        {(isConnected && !isWrongNetwork) &&
                             <button
                                 onClick={handleAction}
                                 disabled={isFetchingBalances || !amount}

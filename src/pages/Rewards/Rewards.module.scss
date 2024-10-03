@@ -25,6 +25,12 @@
 
         overflow: hidden;
 
+        .error {
+            color: red;
+            font-size: small;
+            font-weight: 200;
+        }
+
         .rewardsHeader {
             display: flex;
             align-items: start;
