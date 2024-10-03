@@ -10,7 +10,7 @@
     padding: 20px 0px 20px 0px;
     z-index: 2;
 
-    @media (max-width: 720px) {
+    @media (max-width: 760px) {
         display: none;
     }
 
@@ -76,7 +76,7 @@
     display: none;
     position: relative;
 
-    @media (max-width: 720px) {
+    @media (max-width: 760px) {
         display: flex;
     }
 
