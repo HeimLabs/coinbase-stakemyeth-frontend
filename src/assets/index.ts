@@ -8,6 +8,8 @@ export { default as mobileIcon } from "./mobileIcon.png";
 export { default as checkIcon } from "./checkIcon.png";
 export { default as crossIcon } from "./crossIcon.png";
 export { default as beaconchainLogo } from "./beaconchainLogo.png";
+export { default as menuIcon } from "./menuIcon.png";
+export { default as closeIcon } from "./closeIcon.png";
 
 // STATES
 export { default as activeIcon } from "./states/activeIcon.png";

@@ -7,6 +7,10 @@
     width: 100%;
     padding: 0px 40px;
 
+    @media (max-width: 530px) {
+        padding: 0px 20px;
+    }
+
     .outlet {
         display: flex;
         flex-direction: column;
