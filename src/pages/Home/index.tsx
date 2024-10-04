@@ -126,7 +126,7 @@ export default function Home() {
                 <div className={`${styles.container} ${styles.status}`}>
                     <img src={getStatusImage()} alt="" />
                     <span className={styles.title}>{getTitleText()}</span>
-                    {(isSuccess && (selectedTab != "unstake" && selectedMode != "dedicated")) &&
+                    {isSuccess && !(selectedTab === "unstake" && selectedMode == "dedicated") &&
                         <div className={styles.action} onClick={() => window.open(getTransactionLink(), "__blank")}>
                             <img src={etherscanLogo} alt="Etherscan" />
                             <span>View Your Transaction</span>

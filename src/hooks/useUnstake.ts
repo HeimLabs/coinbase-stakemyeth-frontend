@@ -49,13 +49,16 @@ export const useUnstake = (amount: number) => {
     useEffect(() => {
         const handleSuccess = async () => {
             try {
-                await queryClient.invalidateQueries({ queryKey: ['getBalances'] })
+                if (mode == "shared" && isTxnSuccess)
+                    await queryClient.invalidateQueries({ queryKey: ['getBalances'] })
+                else if (mode == "dedicated" && buildMutation.isSuccess)
+                    await queryClient.invalidateQueries({ queryKey: ['getBalances'] })
             } catch (err) {
                 console.error(err);
             }
         }
         if (isTxnSuccess) handleSuccess();
-    }, [isTxnSuccess])
+    }, [isTxnSuccess || buildMutation.isSuccess])
 
     const reset = () => {
         buildMutation.reset();
@@ -69,7 +72,7 @@ export const useUnstake = (amount: number) => {
         isUnstakeBuilding: buildMutation.isPending,
         isUnstakeWaiting: sendTransactionMutation.isPending,
         isUnstakeSubmitting: isTxnFetching,
-        isUnstakeSuccess:  mode == "shared" ? isTxnSuccess : buildMutation.isSuccess,
+        isUnstakeSuccess: mode == "shared" ? isTxnSuccess : buildMutation.isSuccess,
         isUnstakeError: buildMutation.isError || sendTransactionMutation.isError,
         unstakeTxnHash,
         resetUnstake: reset
