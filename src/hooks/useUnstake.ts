@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { buildUnstakeOperation } from "../api"
 import { useEffect, useState } from "react";
 import { Transaction } from "../types/api.types";
-import { useAccount, useSendTransaction, useWaitForTransactionReceipt } from "wagmi";
+import { useAccount, useEstimateGas, useGasPrice, useSendTransaction, useWaitForTransactionReceipt } from "wagmi";
 import { useGlobal } from "../contexts/global.context";
 import { holesky } from "viem/chains";
 
@@ -12,6 +12,9 @@ export const useUnstake = (amount: number) => {
     const { selectedMode: mode } = useGlobal();
     const { sendTransactionAsync } = useSendTransaction();
     const [transaction, setTransaction] = useState<Transaction>();
+    const { data: gas } = useEstimateGas({ data: transaction?.data, to: transaction?.to, value: transaction?.value });
+    const { data: gasPrice } = useGasPrice();
+    const [unstakeTxnFee, setTxnFee] = useState(0);
     const [unstakeTxnHash, setTxnHash] = useState<`0x${string}`>();
     const { isFetching: isTxnFetching, isSuccess: isTxnSuccess } = useWaitForTransactionReceipt({ confirmations: 1, hash: unstakeTxnHash });
 
@@ -58,7 +61,15 @@ export const useUnstake = (amount: number) => {
             }
         }
         if (isTxnSuccess) handleSuccess();
-    }, [isTxnSuccess || buildMutation.isSuccess])
+    }, [isTxnSuccess || buildMutation.isSuccess]);
+
+    // Handle Txn Fee
+    useEffect(() => {
+        if (gas && gasPrice) {
+            const _txnFee = (Number(gas) * Number(gasPrice)) / 10 ** 18;
+            setTxnFee(_txnFee);
+        }
+    }, [gas, gasPrice]);
 
     const reset = () => {
         buildMutation.reset();
@@ -75,6 +86,7 @@ export const useUnstake = (amount: number) => {
         isUnstakeSuccess: mode == "shared" ? isTxnSuccess : buildMutation.isSuccess,
         isUnstakeError: buildMutation.isError || sendTransactionMutation.isError,
         unstakeTxnHash,
+        unstakeTxnFee,
         resetUnstake: reset
     }
 }

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { buildClaimOperation } from "../api"
 import { useEffect, useState } from "react";
 import { Transaction } from "../types/api.types";
-import { useAccount, useSendTransaction, useWaitForTransactionReceipt } from "wagmi";
+import { useAccount, useEstimateGas, useGasPrice, useSendTransaction, useWaitForTransactionReceipt } from "wagmi";
 import { useGlobal } from "../contexts/global.context";
 import { holesky } from "viem/chains";
 
@@ -12,6 +12,9 @@ export const useClaim = (amount: number) => {
     const { selectedMode: mode } = useGlobal();
     const { sendTransactionAsync } = useSendTransaction();
     const [transaction, setTransaction] = useState<Transaction>();
+    const { data: gas } = useEstimateGas({ data: transaction?.data, to: transaction?.to, value: transaction?.value });
+    const { data: gasPrice } = useGasPrice();
+    const [claimTxnFee, setTxnFee] = useState(0);
     const [claimTxnHash, setTxnHash] = useState<`0x${string}`>();
     const { isFetching: isTxnFetching, isSuccess: isTxnSuccess } = useWaitForTransactionReceipt({ confirmations: 1, hash: claimTxnHash });
 
@@ -55,7 +58,15 @@ export const useClaim = (amount: number) => {
             }
         }
         if (isTxnSuccess) handleSuccess();
-    }, [isTxnSuccess])
+    }, [isTxnSuccess]);
+
+    // Handle Txn Fee
+    useEffect(() => {
+        if (gas && gasPrice) {
+            const _txnFee = (Number(gas) * Number(gasPrice)) / 10 ** 18;
+            setTxnFee(_txnFee);
+        }
+    }, [gas, gasPrice]);
 
     const reset = () => {
         buildMutation.reset();
@@ -71,6 +82,7 @@ export const useClaim = (amount: number) => {
         isClaimSubmitting: isTxnFetching,
         isClaimSuccess: isTxnSuccess,
         isClaimError: buildMutation.isError || sendTransactionMutation.isError,
+        claimTxnFee,
         claimTxnHash,
         resetClaim: reset
     }

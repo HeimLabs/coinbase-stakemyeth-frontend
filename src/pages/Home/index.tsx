@@ -27,12 +27,13 @@ export default function Home() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [isFailed, setIsFailed] = useState(false);
+    const [txnFee, setTxnFee] = useState<number>();
     const [txHash, setTxHash] = useState<`0x${string}`>();
 
     const { data: balances, isFetching: isFetchingBalances } = useGetBalances();
-    const { initiateStaking, isStakeBuilding, isStakeWaiting, isStakeSubmitting, isStakeSuccess, isStakeError, stakeTxnHash, resetStake } = useStake(amount || 0);
-    const { initiateUnstaking, isUnstakeBuilding, isUnstakeWaiting, isUnstakeSubmitting, isUnstakeSuccess, isUnstakeError, unstakeTxnHash, resetUnstake } = useUnstake(amount || 0);
-    const { initiateClaiming, isClaimBuilding, isClaimWaiting, isClaimSubmitting, isClaimSuccess, isClaimError, claimTxnHash, resetClaim } = useClaim(amount || 0);
+    const { initiateStaking, isStakeBuilding, isStakeWaiting, isStakeSubmitting, isStakeSuccess, isStakeError, stakeTxnFee, stakeTxnHash, resetStake } = useStake(amount || 0);
+    const { initiateUnstaking, isUnstakeBuilding, isUnstakeWaiting, isUnstakeSubmitting, isUnstakeSuccess, isUnstakeError, unstakeTxnFee, unstakeTxnHash, resetUnstake } = useUnstake(amount || 0);
+    const { initiateClaiming, isClaimBuilding, isClaimWaiting, isClaimSubmitting, isClaimSuccess, isClaimError, claimTxnFee, claimTxnHash, resetClaim } = useClaim(amount || 0);
 
     // Reset Tabs
     useEffect(() => {
@@ -56,12 +57,13 @@ export default function Home() {
         setIsSubmitting(isStakeSubmitting || isUnstakeSubmitting || isClaimSubmitting);
         setIsSuccess(isStakeSuccess || isUnstakeSuccess || isClaimSuccess);
         setIsFailed(isStakeError || isUnstakeError || isClaimError);
+        setTxnFee([stakeTxnFee, unstakeTxnFee, claimTxnFee].find(v => v !== undefined));
         setTxHash([stakeTxnHash, unstakeTxnHash, claimTxnHash].find(v => v !== undefined));
     }, [
-        isStakeBuilding, isStakeWaiting, isStakeSubmitting, isStakeSuccess, isStakeError, stakeTxnHash,
+        isStakeBuilding, isStakeWaiting, isStakeSubmitting, isStakeSuccess, isStakeError, stakeTxnFee, stakeTxnHash,
         isUnstakeBuilding, isUnstakeWaiting, isUnstakeSubmitting, isUnstakeSuccess, isUnstakeError, unstakeTxnHash,
         isClaimBuilding, isClaimWaiting, isClaimSubmitting, isClaimSuccess, isClaimError, claimTxnHash
-    ])
+    ]);
 
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         // @review - auto max bad UX?
@@ -105,6 +107,7 @@ export default function Home() {
 
     const getSubtitleText = () => {
         if (isBuilding && selectedMode == "dedicated") return "This process can take couple of minutes...";
+        if (isWaiting && !(selectedTab == "unstake" && selectedMode == "dedicated")) return `Transaction Fee: ~${txnFee?.toLocaleString(undefined, { maximumFractionDigits: 4 }) || " NA "}ETH`;
         if (isSuccess) return "The process of staking and unstaking on Ethereum can take multiple days to complete. Please see the latest timings here.";
         else return "";
     }
@@ -235,11 +238,11 @@ export default function Home() {
                                 <span className={styles.title}>Provider</span>
                                 <span className={styles.subtitle}>Coinbase</span>
                             </div>
-                            <div className={styles.hr} />
-                            <div className={styles.row}>
+                            {/* <div className={styles.hr} /> */}
+                            {/* <div className={styles.row}>
                                 <span className={styles.title}>Transaction Fee</span>
                                 <span className={styles.subtitle}>0.00 ETH/$0.00</span>
-                            </div>
+                            </div> */}
                         </div>
                         {/* ACTION */}
                         {(isConnected && !isWrongNetwork) &&
