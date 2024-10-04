@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Chart from "../../components/Rewards/Chart";
+import Chart, { LoadingChart } from "../../components/Rewards/Chart";
 import { useGetRewards } from "../../hooks/useGetRewards";
 import styles from "./Rewards.module.scss";
 import Validators from "../../components/Rewards/Validators";
@@ -9,11 +9,10 @@ import { useAccount } from "wagmi";
 
 export default function Rewards() {
     const [days, setDays] = useState(7);
-    const { data: stakingRewards, totalRewards } = useGetRewards(days);
+    const { data: stakingRewards, totalRewards, isFetching } = useGetRewards(days);
     const { selectedMode } = useGlobal();
     const { isWrongNetwork } = useCheckNetwork();
     const { isConnected } = useAccount();
-
 
     const handleDaysChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setDays(Number(e.target.value))
@@ -39,7 +38,10 @@ export default function Rewards() {
                 {(isConnected && isWrongNetwork) &&
                     <span className={styles.error}>Wrong network, please switch to supported network!</span>
                 }
-                <Chart rewards={stakingRewards || []} />
+                {(stakingRewards && stakingRewards?.length > 0)
+                    ? <Chart rewards={stakingRewards || []} />
+                    : <LoadingChart isLoading={isFetching}/>
+                }
             </div>
             {selectedMode == "dedicated" && <Validators />}
         </div>
