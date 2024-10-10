@@ -26,6 +26,12 @@ export default function Modes() {
                     </div>
                 </div>
             </div>
+            <div className={styles.description}>
+                {selectedMode == "shared"
+                    ? "Stake any amount of ETH using a shared validator operated by Coinbase"
+                    : "Stake increments of 32 ETH using your own dedicated validator operated by Coinbase"
+                }
+            </div>
         </div>
     );
 }

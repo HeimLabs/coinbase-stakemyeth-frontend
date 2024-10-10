@@ -4,7 +4,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     width: 100%;
+    gap: 10px;
+    max-width: 500px;
 
     .tabsContainer {
         display: flex;
@@ -12,7 +15,6 @@
         justify-content: center;
         flex-direction: row;
         width: 100%;
-        max-width: 500px;
         border-radius: 15px;
         overflow: hidden;
         background-color: white;
@@ -57,6 +59,16 @@
                 pointer-events: none;
                 background-color: gray;
             }
+        }
+    }
+
+    .description {
+        text-align: center;
+        font-weight: 200;
+        color: $purple-03;
+
+        @media (max-width: 530px) {
+            font-size: small;
         }
     }
 }
