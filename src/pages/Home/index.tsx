@@ -10,6 +10,7 @@ import { useUnstake } from "../../hooks/useUnstake";
 import { useClaim } from "../../hooks/useClaim";
 import Skeleton from "react-loading-skeleton";
 import { useCheckNetwork } from "../../hooks/useCheckNetwork";
+import { formatBalance } from "../../utils";
 
 // @todo - Handle unsupported network
 
@@ -183,7 +184,7 @@ export default function Home() {
                                 {
                                     isFetchingBalances
                                         ? <Skeleton width={100} />
-                                        : <span className={styles.value}>{Number(balance).toLocaleString(undefined, { maximumFractionDigits: 4 })} ETH</span>
+                                        : <span className={styles.value}>{formatBalance(balance)} ETH</span>
                                 }
                             </div>
                         }
