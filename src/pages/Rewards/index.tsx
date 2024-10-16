@@ -24,7 +24,7 @@ export default function Rewards() {
                 <div className={styles.rewardsHeader}>
                     <div className={styles.earned}>
                         <span className={styles.key}>Total Rewards Earned</span>
-                        <span className={styles.value}>{totalRewards} ETH</span>
+                        <span className={styles.value}>{totalRewards.toLocaleString(undefined, { maximumFractionDigits: 10 })} ETH</span>
                     </div>
                     <select name="days" id="days" onChange={handleDaysChange}>
                         <option value={7}>Last 7 days</option>
@@ -40,7 +40,7 @@ export default function Rewards() {
                 }
                 {(stakingRewards && stakingRewards?.length > 0)
                     ? <Chart rewards={stakingRewards || []} />
-                    : <LoadingChart isLoading={isFetching}/>
+                    : <LoadingChart isLoading={isFetching} />
                 }
             </div>
             {selectedMode == "dedicated" && <Validators />}

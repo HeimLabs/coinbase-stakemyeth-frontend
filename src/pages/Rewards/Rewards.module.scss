@@ -38,6 +38,10 @@
             width: 100%;
             padding: 30px 40px 0px 40px;
 
+            @media (max-width: 530px) {
+            padding: 20px 20px 0px 20px;
+            }
+
             .earned {
                 display: flex;
                 align-items: start;

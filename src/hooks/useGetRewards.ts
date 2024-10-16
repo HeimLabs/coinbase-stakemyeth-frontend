@@ -27,6 +27,7 @@ export const useGetRewards = (days = 30) => {
 
     useEffect(() => {
         if (query.data) setTotalRewards(query.data.reduce((sum, reward) => sum + reward.amount, 0));
+        else setTotalRewards(0);
     }, [query.data])
 
     return { ...query, totalRewards };
