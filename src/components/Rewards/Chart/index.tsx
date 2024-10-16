@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Line, XAxis, Tooltip, ResponsiveContainer, Area, ComposedChart, TooltipProps } from 'recharts';
+import { XAxis, Tooltip, ResponsiveContainer, Area, ComposedChart, TooltipProps } from 'recharts';
 import { StakingReward } from '../../../types/api.types';
 
 type ChartData = {
@@ -75,12 +75,6 @@ export default function Chart({ rewards }: { rewards: StakingReward[] }) {
                     strokeWidth={1}
                     fill="url(#colorUSDValue)"
                     tooltipType='none'
-                />
-                <Line
-                    type="linear"
-                    dataKey="amount"
-                    stroke="#9747FF"
-                    dot={false}
                 />
             </ComposedChart>
         </ResponsiveContainer>
