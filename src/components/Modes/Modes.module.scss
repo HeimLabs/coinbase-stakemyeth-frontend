@@ -67,6 +67,10 @@
         font-weight: 200;
         color: $purple-03;
 
+        &.caution {
+            color: red;
+        }
+
         @media (max-width: 530px) {
             font-size: small;
         }

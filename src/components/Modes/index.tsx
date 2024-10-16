@@ -1,11 +1,19 @@
+import { useChainId } from "wagmi";
 import { useGlobal } from "../../contexts/global.context";
 import styles from "./Modes.module.scss";
+import { useLocation } from "react-router-dom";
 
 export default function Modes() {
     const { selectedMode, setMode } = useGlobal();
+    const { pathname } = useLocation();
+    const chainId = useChainId();
 
     return (
         <div className={styles.main}>
+            <div className={`${styles.description} ${styles.caution}`}>
+                {(chainId != 1 && pathname.includes("rewards")) &&
+                    "Rewards data is currently supported on mainnet only"}
+            </div>
             <div className={styles.tabsContainer}>
                 <div
                     className={`${styles.tab} ${selectedMode == "shared" ? styles.active : ""}`}
