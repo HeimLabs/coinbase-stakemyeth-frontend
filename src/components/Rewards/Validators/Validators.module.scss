@@ -31,12 +31,20 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowwrap;
-        gap: 10px;
+        gap: 5px;
         padding: 0px 20px;
 
         img {
             height: 15px;
             width: auto;
+        }
+
+        a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+            gap: 5px;
         }
     }
 

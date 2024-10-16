@@ -3,7 +3,7 @@ import { stateStyles } from "../../../config/states.config";
 import { useGetValidators } from "../../../hooks/useGetValidators";
 import styles from "./Validators.module.scss";
 import { holesky, mainnet } from "viem/chains";
-import { beaconchainLogo } from "../../../assets";
+import { beaconchainLogo, externalLinkIcon } from "../../../assets";
 import Skeleton from "react-loading-skeleton";
 
 export default function Validators() {
@@ -37,7 +37,8 @@ export default function Validators() {
                             <div className={`${styles.row}`}>
                                 <div className={`${styles.validatorCell}`}>
                                     <a href={getBeaconChainLink(validator.id)} target="_blank" rel="noopener noreferrer">
-                                        <img src={beaconchainLogo} alt="Beacon Chain" />
+                                            <img src={beaconchainLogo} alt="Beacon Chain" />
+                                            <img src={externalLinkIcon} alt="Beacon Chain" />
                                     </a>
                                     {validator.id}
                                 </div>

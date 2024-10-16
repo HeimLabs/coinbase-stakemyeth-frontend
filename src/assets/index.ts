@@ -10,6 +10,7 @@ export { default as crossIcon } from "./crossIcon.png";
 export { default as beaconchainLogo } from "./beaconchainLogo.png";
 export { default as menuIcon } from "./menuIcon.png";
 export { default as closeIcon } from "./closeIcon.png";
+export { default as externalLinkIcon } from "./externalLinkIcon.png";
 
 // STATES
 export { default as activeIcon } from "./states/activeIcon.png";
