@@ -43,7 +43,8 @@
             }
 
             &.active {
-                background: linear-gradient(90deg, $purple-01 0%, $purple-02 100%);
+                // background: linear-gradient(90deg, $purple-01 0%, $purple-02 100%);
+                background: $purple-01;
                 color: white;
                 box-shadow: 0px 0px 10px $purple-02;
                 cursor: default;
