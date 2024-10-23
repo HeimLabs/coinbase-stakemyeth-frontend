@@ -4,14 +4,20 @@ import styles from "../styles/Layout.module.scss";
 import NavBar from '../components/NavBar';
 import { coinbaseBadge } from '../assets';
 import Modes from '../components/Modes';
+import { useGlobal } from '../contexts/global.context';
+import Sanctioned from '../components/Sanctioned';
 
 export default function RootLayout() {
+    const { isSanctioned } = useGlobal();
+
     return (
         <div className={styles.main}>
             {/* NAVBAR */}
             <NavBar />
             {/* PAGE */}
             <main className={styles.outlet}>
+                {isSanctioned &&
+                    <Sanctioned />}
                 <Modes />
                 <Outlet />
             </main>
