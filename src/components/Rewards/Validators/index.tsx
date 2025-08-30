@@ -2,7 +2,8 @@ import { useAccount } from "wagmi";
 import { stateStyles } from "../../../config/states.config";
 import { useGetValidators } from "../../../hooks/useGetValidators";
 import styles from "./Validators.module.scss";
-import { holesky, mainnet } from "viem/chains";
+import { mainnet } from "viem/chains";
+import { hoodi } from "@reown/appkit/networks";
 import { beaconchainLogo, externalLinkIcon } from "../../../assets";
 import Skeleton from "react-loading-skeleton";
 
@@ -11,7 +12,7 @@ export default function Validators() {
     const { chainId } = useAccount();
 
     const getBeaconChainLink = (validatorId: `0x${string}` | string) => {
-        if (chainId == holesky.id) return `https://holesky.beaconcha.in/validator/${validatorId}`;
+        if (chainId == hoodi.id) return `https://hoodi.beaconcha.in/validator/${validatorId}`;
         else if (chainId == mainnet.id) return `https://beaconcha.in/validator/${validatorId}`;
         else return "";
     }

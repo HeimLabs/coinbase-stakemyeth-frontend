@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Transaction } from "../types/api.types";
 import { useAccount, useEstimateGas, useGasPrice, useSendTransaction, useWaitForTransactionReceipt } from "wagmi";
 import { useGlobal } from "../contexts/global.context";
-import { holesky } from "viem/chains";
+import { hoodi } from "@reown/appkit/networks";
 
 export const useClaim = (amount: number) => {
     const queryClient = useQueryClient();
@@ -21,7 +21,7 @@ export const useClaim = (amount: number) => {
     const buildMutation = useMutation({
         mutationFn: async () => await buildClaimOperation({
             address: address as string,
-            chainId: chainId || holesky.id,
+            chainId: chainId || hoodi.id,
             mode,
             amount
         }),

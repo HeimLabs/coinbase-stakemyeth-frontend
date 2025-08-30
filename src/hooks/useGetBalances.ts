@@ -2,7 +2,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getBalances } from "../api";
 import { useAccount } from "wagmi";
 import { useGlobal } from "../contexts/global.context";
-import { holesky } from "viem/chains";
+import { hoodi } from "@reown/appkit/networks";
 import { useEffect } from "react";
 import { AxiosError } from "axios";
 
@@ -14,7 +14,7 @@ export const useGetBalances = () => {
         queryKey: ["getBalances", address, chainId, mode],
         queryFn: async () => getBalances({
             address: address as string,
-            chainId: chainId || holesky.id,
+            chainId: chainId || hoodi.id,
             mode
         }),
         select: (data) => data.data,
