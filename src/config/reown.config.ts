@@ -19,5 +19,9 @@ createAppKit({
     // @ts-expect-error Type compatibility issue between AppKit and wagmi networks
     networks,
     projectId,
-    themeMode: 'light'
+    themeMode: 'light',
+    features: {
+        email: false,
+        socials: false
+    }
 })
