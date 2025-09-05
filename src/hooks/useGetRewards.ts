@@ -3,7 +3,7 @@ import { getRewards } from "../api";
 import { useAccount } from "wagmi";
 import { useGlobal } from "../contexts/global.context";
 import { useEffect, useState } from "react";
-import { holesky } from "viem/chains";
+import { hoodi } from "@reown/appkit/networks";
 
 export const useGetRewards = (days = 30) => {
     const { address, chainId } = useAccount();
@@ -15,7 +15,7 @@ export const useGetRewards = (days = 30) => {
         queryKey: ["getRewards", address, chainId, days, mode],
         queryFn: async () => getRewards({
             address: address as string,
-            chainId: chainId || holesky.id,
+            chainId: chainId || hoodi.id,
             mode,
             days
         }),

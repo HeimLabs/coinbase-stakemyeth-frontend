@@ -1,22 +1,11 @@
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
-import { getBlockchainApiRpcUrl, mainnet, } from "@reown/appkit/networks";
-import { CaipNetwork, createAppKit } from "@reown/appkit/react";
-import { holesky as _holesky } from "wagmi/chains";
+import { mainnet, hoodi } from "@reown/appkit/networks";
+import { createAppKit } from "@reown/appkit/react";
 
 const projectId = import.meta.env.VITE_REOWN_PROJECT_ID;
 
-const holesky: CaipNetwork = {
-    id: `eip155:${_holesky.id}`,
-    chainId: _holesky.id,
-    name: "Holesky",
-    currency: "ETH",
-    explorerUrl: "https://holesky.etherscan.io",
-    rpcUrl: getBlockchainApiRpcUrl(_holesky.id, 'eip155'),
-    chainNamespace: "eip155",
-}
-
 // 3. Set the networks
-export const networks = [mainnet, holesky]
+export const networks = [mainnet, hoodi]
 
 // 4. Create Wagmi Adapter
 export const wagmiAdapter = new WagmiAdapter({
@@ -27,7 +16,12 @@ export const wagmiAdapter = new WagmiAdapter({
 // 5. Create modal
 createAppKit({
     adapters: [wagmiAdapter],
+    // @ts-expect-error Type compatibility issue between AppKit and wagmi networks
     networks,
     projectId,
-    themeMode: 'light'
+    themeMode: 'light',
+    features: {
+        email: false,
+        socials: false
+    }
 })

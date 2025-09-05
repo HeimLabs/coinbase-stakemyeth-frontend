@@ -8,7 +8,7 @@ export const useCheckNetwork = () => {
     const [isWrongNetwork, setIsWrongNetwork] = useState(false);
 
     useEffect(() => {
-        if (!networks.some(network => network.chainId === chainId))
+        if (!networks.some(network => network.id === chainId))
             setIsWrongNetwork(true);
         else
             setIsWrongNetwork(false);
@@ -16,7 +16,7 @@ export const useCheckNetwork = () => {
 
     return {
         isWrongNetwork,
-        switchChain: () => switchChain({ chainId: Number(networks[1].chainId) }),
+        switchChain: () => switchChain({ chainId: networks[1].id }),
         isPending
     }
 }
