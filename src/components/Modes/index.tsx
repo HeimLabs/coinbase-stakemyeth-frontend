@@ -38,7 +38,8 @@ export default function Modes() {
                 {selectedMode == "shared"
                     ? "Stake any amount of ETH using a shared validator operated by Coinbase"
                     : "Stake increments of 32 ETH using your own dedicated validator operated by Coinbase"
-                }
+                } <br />
+                By using this app, you agree to Coinbase's <a href="https://www.coinbase.com/legal/privacy">privacy policy</a> 
             </div>
         </div>
     );
